@@ -7,6 +7,7 @@ using System.Data.SqlClient;
 using Dominio;
 using Negocio;
 using System.Security.Cryptography.X509Certificates;
+using System.Xml.Linq;
 
 namespace Negocio
 {
@@ -57,6 +58,41 @@ namespace Negocio
             }
 
         }
+
+        public List<Articulos> listarConSP()
+        {
+            List<Articulos> lista = new List<Articulos>();
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                string consulta = "SELECT A.Id ID,A.Codigo, A.Nombre, A.Descripcion, M.Descripcion Marca, C.Descripcion Categoria, A.Precio, I.ImagenUrl Imagen from ARTICULOS A, MARCAS M, CATEGORIAS C, IMAGENES I WHERE A.IdMarca = M.Id AND A.IdCategoria = C.Id AND A.Id = I.IdArticulo";
+                
+                datos.setearConsulta(consulta);
+                datos.ejecutarLectura();
+                while (datos.Lector.Read())
+                {
+                    Articulos aux = new Articulos();
+                    aux.IdArticulo = (int)datos.Lector["ID"];
+                    aux.Codigo = (string)datos.Lector["Codigo"];
+                    aux.Nombre = (string)datos.Lector["Nombre"];
+                    aux.Descripcion = (string)datos.Lector["Descripcion"];
+                    aux.Marcas = new Marcas();
+                    aux.Marcas.DescripcionMarca = (string)datos.Lector["Marca"];
+                    aux.Categoria = new Categoria();
+                    aux.Categoria.DescripcionCategoria = (string)datos.Lector["Categoria"];
+                    aux.imagenes = new Imagenes();
+                    aux.imagenes.ImagenUrl = (string)datos.Lector["Imagen"];
+
+                    lista.Add(aux);
+                }
+
+                return lista;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
         public int Agregar(Articulos nuevo)
         {
             try
@@ -83,16 +119,16 @@ namespace Negocio
         {
 
         }
-                MessageBox.Show("¿Eliminar?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.warning);
-            Messag;
         public void Eliminar(int id) 
         {
             try
             {
-                AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("DELETE FROM ARTICULOS WHERE ID = @id");
-                datos.setearParametro("@id", id);
-                datos.ejecutarLectura();
+                //AccesoDatos datos = new AccesoDatos();
+                //datos.setearConsulta("DELETE FROM ARTICULOS WHERE ID = @id");
+                //datos.setearParametro("@id", id);
+                //datos.ejecutarLectura();
+                //MessageBox.Show("¿Eliminar?", "Eliminando", MessageBoxButtons.YesNo, MessageBoxIcon.warning);
+                //Messag;
 
             }
             catch (Exception ex)
