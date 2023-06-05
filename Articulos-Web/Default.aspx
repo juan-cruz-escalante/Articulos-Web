@@ -3,4 +3,5 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
     <h1>ARTICULOS</h1>
+    <p>Llegaste a Articulos....</p>
 </asp:Content>

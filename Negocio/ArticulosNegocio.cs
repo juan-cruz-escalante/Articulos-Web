@@ -44,7 +44,6 @@ namespace Negocio
                     aux.Categoria.DescripcionCategoria = (string)lector["Categoria"];
                     aux.imagenes = new Imagenes();
                     aux.imagenes.ImagenUrl= (string)lector["Imagen"];
-                    aux.Precio = (float)lector["Precio"];
         
                     lista.Add(aux);
                 }
@@ -58,7 +57,6 @@ namespace Negocio
             }
 
         }
-
         public int Agregar(Articulos nuevo)
         {
             try
